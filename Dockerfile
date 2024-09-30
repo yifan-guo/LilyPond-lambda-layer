@@ -1,8 +1,7 @@
 FROM amazonlinux:2
 
-# Install dependencies
-RUN yum install -y epel-release && \
-    yum install -y \
+# Install dependencies directly
+RUN yum install -y \
     gcc-c++ \
     git \
     make \
@@ -16,7 +15,9 @@ RUN yum install -y epel-release && \
     freetype-devel \
     fontconfig-devel \
     bison \
-    flex
+    flex \
+    cairo-devel \
+    pango-devel
 
 # Download and install LilyPond
 RUN wget https://lilypond.org/download/binaries/linux/lilypond-2.24.2-1.linux-x86_64.sh && \
