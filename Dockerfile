@@ -20,7 +20,7 @@ RUN yum install -y \
     pango-devel
 
 # Download and install LilyPond
-RUN wget https://lilypond.org/download/binaries/linux/lilypond-2.24.2-1.linux-x86_64.sh && \
+RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilypond-2.24.4-linux-x86_64.tar.gz && \
     chmod +x lilypond-2.24.2-1.linux-x86_64.sh && \
     ./lilypond-2.24.2-1.linux-x86_64.sh --prefix=/opt/lilypond --disable-documentation
 
