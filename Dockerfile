@@ -25,7 +25,7 @@ RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilyp
     ./lilypond-2.24.2-1.linux-x86_64.sh --prefix=/opt/lilypond --disable-documentation
 
 # Clean up
-RUN rm lilypond-2.24.2-1.linux-x86_64.sh
+RUN rm lilypond-2.24.4-linux-x86_64.tar.gz
 
 # Set up directory structure for Lambda Layer
 RUN mkdir -p /opt/lambda/layer/bin && \
