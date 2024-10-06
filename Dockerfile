@@ -17,7 +17,8 @@ RUN yum install -y \
     bison \
     flex \
     cairo-devel \
-    pango-devel
+    pango-devel \
+    zip  # Install the zip utility
 
 # Download and install LilyPond
 RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilypond-2.24.4-linux-x86_64.tar.gz && \
@@ -26,11 +27,15 @@ RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilyp
     rm lilypond-2.24.4-linux-x86_64.tar.gz
 
 # Set up directory structure for Lambda Layer
-RUN mkdir -p /opt/lambda/layer && \
-    cp -r /opt/lilypond/* /opt/lambda/layer/
+RUN mkdir -p /opt && \
+    cp -r /opt/lilypond/* /opt/ && \
+    rm -rf /opt/lilypond  # Cleanup
 
-# Set the working directory
-WORKDIR /opt/lambda/layer
+# Create a ZIP package of the layer
+RUN cd /opt && zip -r /opt/lilypond_layer.zip .
+
+# Set the final working directory
+WORKDIR /opt
 
 # Command to keep the container running (optional)
 CMD ["ls", "-l"]
