@@ -23,8 +23,7 @@ docker run -v /Users/yifanguo/Downloads/output.ly:/opt/lambda/layer/bin/output.l
 
  Execute & generate pdf
  ```
- cd bin/
- ./lilypond output.ly
+/opt/bin/lilypond /output/output.ly
  ```
 
  Expected output

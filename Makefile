@@ -11,7 +11,7 @@ build:
 
 # Run interactive shell and mount .ly file
 run-interactive:
-	docker run -v $(OUTPUT_DIR):/output --platform linux/amd64 -it $(IMAGE_NAME) /bin/bash
+	docker run -v $(OUTPUT_DIR)/output:/output --platform linux/amd64 -it $(IMAGE_NAME) /bin/bash
 
 # Generate Lambda layer .zip file
 generate-layer:
