@@ -4,6 +4,10 @@ ECR_URI=105411766712.dkr.ecr.$(AWS_REGION).amazonaws.com/lilypond/pdf-generator-
 IMAGE_NAME=pdf-generator-lambda
 OUTPUT_DIR=$(shell pwd)
 
+.PHONY: logout
+logout:
+	docker logout 105411766712.dkr.ecr.us-east-2.amazonaws.com
+
 # Authenticate Docker to ECR
 .PHONY: login
 login:
