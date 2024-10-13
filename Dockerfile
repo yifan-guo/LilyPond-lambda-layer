@@ -1,7 +1,6 @@
-# Start with the Amazon Linux 2 base image for Lambda
-FROM public.ecr.aws/lambda/provided:al2
+FROM public.ecr.aws/lambda/python:3.11
 
-# Install necessary dependencies, including Guile and Python
+# Install dependencies directly
 RUN yum install -y \
     gcc-c++ \
     git \
@@ -17,29 +16,19 @@ RUN yum install -y \
     bison \
     flex \
     cairo-devel \
-    pango-devel \
-    guile \
-    python3 \
-    python3-pip \
-    zip \
-    && yum clean all
+    pango-devel
 
-# Download and install LilyPond
-RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilypond-2.24.4-linux-x86_64.tar.gz \
-    && tar -xzf lilypond-2.24.4-linux-x86_64.tar.gz \
-    && mv lilypond-2.24.4 /opt/lilypond \
-    && rm lilypond-2.24.4-linux-x86_64.tar.gz
-
-# Set up directory structure for Lambda Layer
-RUN mkdir -p /opt/lambda/layer/bin && \
-    cp -r /opt/lilypond/bin/* /opt/lambda/layer/bin/
+# Install LilyPond (Make sure you get the correct version)
+RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.24.4/downloads/lilypond-2.24.4-linux-x86_64.tar.gz && \
+    tar -xzf lilypond-2.24.4-linux-x86_64.tar.gz && \
+    mv lilypond-2.24.4 /opt/lilypond && \
+    rm lilypond-2.24.4-linux-x86_64.tar.gz
 
 # Install awslambdaric for Lambda Runtime Interface Client
 RUN pip3 install awslambdaric --target /opt/python
 
-# Set environment variables
+# Set PYTHONPATH
 ENV PYTHONPATH="/opt/python:${PYTHONPATH}"
-ENV PATH="/opt/lambda/layer/bin:${PATH}"
 
 # Copy the Lambda handler function
 COPY app.py /var/task/app.py

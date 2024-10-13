@@ -11,7 +11,7 @@ login:
 # Build the Docker image for x86_64
 .PHONY: build
 build:
-	docker build --platform linux/amd64 -t $(IMAGE_NAME):latest .
+	docker build --provenance=false --no-cache --platform linux/arm64/v8 -t $(IMAGE_NAME):latest .
 
 # Tag the Docker image
 .PHONY: tag
@@ -30,8 +30,12 @@ clean:
 
 # Full workflow
 .PHONY: all
-all: login clean build tag push inspect
+all: login push inspect
 
 .PHONY: inspect
 inspect: 
 	docker inspect $(IMAGE_NAME):latest | grep Architecture
+
+.PHONY: run
+run:
+	docker run -p 9000:8080 $(IMAGE_NAME):latest

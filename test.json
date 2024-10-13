@@ -1,0 +1,5 @@
+{
+    "bucket": "python-lilypond-bucket",
+    "input_file": "output.ly",
+    "output_file": "output.pdf"
+  }
