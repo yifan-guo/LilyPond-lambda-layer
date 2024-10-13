@@ -37,4 +37,4 @@ COPY app.py /var/task/app.py
 WORKDIR /var/task
 
 # Command to start the Lambda runtime
-CMD ["python3", "-m", "awslambdaric", "app.lambda_handler"]
+CMD ["app.lambda_handler"]
