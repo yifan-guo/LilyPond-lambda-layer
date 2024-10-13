@@ -2,6 +2,7 @@
 AWS_REGION=us-east-2
 ECR_URI=105411766712.dkr.ecr.$(AWS_REGION).amazonaws.com/lilypond/pdf-generator-lambda:latest
 IMAGE_NAME=pdf-generator-lambda
+OUTPUT_DIR=$(shell pwd)
 
 # Authenticate Docker to ECR
 .PHONY: login
@@ -11,7 +12,7 @@ login:
 # Build the Docker image for x86_64
 .PHONY: build
 build:
-	docker build --provenance=false --no-cache --platform linux/arm64/v8 -t $(IMAGE_NAME):latest .
+	docker build --provenance=false --platform linux/amd64 -t $(IMAGE_NAME):latest .
 
 # Tag the Docker image
 .PHONY: tag
@@ -38,4 +39,8 @@ inspect:
 
 .PHONY: run
 run:
-	docker run -p 9000:8080 $(IMAGE_NAME):latest
+	docker run --platform=linux/amd64 -p 9000:8080 $(IMAGE_NAME):latest
+
+.PHONY: run-interactive
+run-interactive:
+	docker run --platform=linux/amd64 --rm -it -v $(OUTPUT_DIR)/output:/tmp/output --entrypoint /bin/bash $(IMAGE_NAME):latest

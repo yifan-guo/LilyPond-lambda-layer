@@ -9,3 +9,8 @@ docker tag pdf-generator-lambda:latest 105411766712.dkr.ecr.us-east-2.amazonaws.
 
 # push repository
 docker push 105411766712.dkr.ecr.us-east-2.amazonaws.com/lilypond/pdf-generator-lambda:latest
+
+# Run command inside of image
+```
+/opt/lilypond/bin/lilypond /tmp/output/output.ly
+```

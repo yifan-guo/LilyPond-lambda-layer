@@ -16,6 +16,7 @@ def lambda_handler(event, context):
 
     # Generate PDF using LilyPond
     command = ['/opt/lilypond/bin/lilypond', input_file_path]
+    print(f"Running command: {command}")
     result = subprocess.run(command, capture_output=True, text=True)
 
     if result.returncode != 0:
