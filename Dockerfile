@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/python:3.11
 
-# Install dependencies directly
+# Install dependencies
 RUN yum install -y \
     gcc-c++ \
     git \
@@ -17,7 +17,7 @@ RUN yum install -y \
     flex \
     cairo-devel \
     pango-devel \
-    libnss-unknown  # Installing libnss-unknown for user permissions
+    libnss-unknown
 
 # Install LilyPond (Make sure you get the correct version)
 RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.23.9/downloads/lilypond-2.23.9-linux-x86_64.tar.gz && \
@@ -25,17 +25,17 @@ RUN wget https://gitlab.com/lilypond/lilypond/-/releases/v2.23.9/downloads/lilyp
     mv lilypond-2.23.9 /opt/lilypond && \
     rm lilypond-2.23.9-linux-x86_64.tar.gz
 
-# Set up the home directory
-RUN mkdir -p /home && \
-    chmod 777 /home
-
 # Set environment variables
-ENV HOME="/home"
+ENV HOME="/home/nobody"
 ENV FONTCONFIG_CACHE="/tmp/fontconfig"
+ENV FONTCONFIG_PATH="/tmp/fontconfig"
 
-# Create the fontconfig cache directory
-RUN mkdir -p /tmp/fontconfig && \
-    chmod 777 /tmp/fontconfig
+# Create directories with proper permissions
+RUN mkdir -p $HOME && \
+    mkdir -p $FONTCONFIG_CACHE && \
+    chmod 777 $HOME && \
+    chmod 777 $FONTCONFIG_CACHE && \
+    chmod 777 /tmp
 
 # Install awslambdaric for Lambda Runtime Interface Client
 RUN pip3 install awslambdaric --target /opt/python
@@ -49,8 +49,8 @@ COPY app.py /var/task/app.py
 # Set the working directory
 WORKDIR /var/task
 
-# Set the user to use
-USER root
+# Switch to the nobody user for running the application
+USER nobody
 
 # Command to start the Lambda runtime
-CMD [ "app.lambda_handler"]
+CMD ["app.lambda_handler"]
