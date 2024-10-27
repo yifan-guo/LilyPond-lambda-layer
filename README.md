@@ -23,8 +23,9 @@ docker run -v /Users/yifanguo/Downloads/output.ly:/opt/lambda/layer/bin/output.l
 
  Execute & generate pdf
  ```
-/opt/bin/lilypond /output/output.ly
+/opt/bin/lilypond -o /tmp/output /output/output.ly
  ```
+(suffix will be added) by lilypond 
 
  Expected output
  ```
@@ -39,3 +40,7 @@ Drawing systems...
 Converting to `output.pdf'...
 Success: compilation successfully completed
 ```
+
+To fix the dreaded `Fontconfig error: No writeable cache directories` error, update the home directory to `/tmp`. On AWS Lambda, the file system is read-only except for the `/tmp` directory. 
+- https://stackoverflow.com/questions/73394593/aws-lambda-function-returns-errormessage-errno-30-read-only-file-system
+- https://stackoverflow.com/questions/77331227/fontconfig-error-no-writable-cache-directories
