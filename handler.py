@@ -8,6 +8,17 @@ import shutil
 def lambda_handler(event, context):
     print("Lambda function started")
 
+    # Print the current home directory
+    current_home_directory = os.path.expanduser('~')
+    print(f"Current home directory: {current_home_directory}")
+    
+    # Set the home directory to the default user in Lambda
+    default_home_directory = '/tmp'
+    os.environ['HOME'] = default_home_directory
+    
+    current_home_directory = os.path.expanduser('~')
+    print(f"Updated home directory to: {current_home_directory}")
+
     s3 = boto3.client('s3')
     bucket_name = event['bucket']
     input_file_key = event['input_file']
