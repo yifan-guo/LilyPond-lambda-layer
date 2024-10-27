@@ -44,3 +44,12 @@ Success: compilation successfully completed
 To fix the dreaded `Fontconfig error: No writeable cache directories` error, update the home directory to `/tmp`. On AWS Lambda, the file system is read-only except for the `/tmp` directory. 
 - https://stackoverflow.com/questions/73394593/aws-lambda-function-returns-errormessage-errno-30-read-only-file-system
 - https://stackoverflow.com/questions/77331227/fontconfig-error-no-writable-cache-directories
+
+# Test event
+```json
+{
+  "bucket": "python-lilypond-bucket",
+  "input_file": "kimi-wo-nosete.ly",
+  "output_file": "kimi-wo-nosete.pdf"
+}
+```
