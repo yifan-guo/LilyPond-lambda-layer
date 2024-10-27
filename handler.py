@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     current_home_directory = os.path.expanduser('~')
     print(f"Current home directory: {current_home_directory}")
     
-    # Set the home directory to the default user in Lambda
+    # Set the home directory to the /tmp (only writeable folder)
     default_home_directory = '/tmp'
     os.environ['HOME'] = default_home_directory
     
